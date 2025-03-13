@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Sidebar,
   SidebarContent,
@@ -34,7 +35,8 @@ const menuItems = [
 ];
 
 export const DashboardSidebar: React.FC = () => {
-  const [activeItem, setActiveItem] = React.useState('/');
+  const location = useLocation();
+  const activeItem = location.pathname;
   
   return (
     <Sidebar>
@@ -61,9 +63,8 @@ export const DashboardSidebar: React.FC = () => {
                       "group transition-all duration-200",
                       activeItem === item.path ? "text-primary font-medium" : "text-muted-foreground"
                     )}
-                    onClick={() => setActiveItem(item.path)}
                   >
-                    <a href={item.path} className="flex items-center gap-3">
+                    <Link to={item.path} className="flex items-center gap-3">
                       <item.icon 
                         size={20} 
                         className={cn(
@@ -72,7 +73,7 @@ export const DashboardSidebar: React.FC = () => {
                         )} 
                       />
                       <span>{item.name}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
