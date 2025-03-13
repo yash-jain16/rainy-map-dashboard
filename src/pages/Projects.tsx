@@ -9,6 +9,107 @@ import {
   BreadcrumbPage, 
   BreadcrumbSeparator 
 } from '@/components/ui/breadcrumb';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search, MapPin, Calendar, CloudRain, AlertCircle } from 'lucide-react';
+
+// Mock project data
+const projects = [
+  {
+    id: '1',
+    name: 'Highway 290 Project',
+    location: 'Austin, TX',
+    coordinates: '30.2672° N, 97.7431° W',
+    startDate: '2023-01-15',
+    endDate: '2023-08-30',
+    status: 'active',
+    rainyDays: {
+      predicted: 8,
+      actual: 10,
+      remaining: 12
+    },
+    riskLevel: 'medium',
+    lastIncident: '2023-06-15'
+  },
+  {
+    id: '2',
+    name: 'Downtown Bridge',
+    location: 'Houston, TX',
+    coordinates: '29.7604° N, 95.3698° W',
+    startDate: '2023-02-20',
+    endDate: '2023-10-15',
+    status: 'active',
+    rainyDays: {
+      predicted: 12,
+      actual: 8,
+      remaining: 10
+    },
+    riskLevel: 'low',
+    lastIncident: '2023-06-16'
+  },
+  {
+    id: '3',
+    name: 'Lakeline Boulevard',
+    location: 'Cedar Park, TX',
+    coordinates: '30.5217° N, 97.8208° W',
+    startDate: '2023-03-10',
+    endDate: '2023-07-25',
+    status: 'active',
+    rainyDays: {
+      predicted: 6,
+      actual: 9,
+      remaining: 5
+    },
+    riskLevel: 'high',
+    lastIncident: '2023-06-14'
+  },
+  {
+    id: '4',
+    name: 'Riverside Drive Expansion',
+    location: 'Austin, TX',
+    coordinates: '30.2459° N, 97.7603° W',
+    startDate: '2023-04-05',
+    endDate: '2023-11-20',
+    status: 'active',
+    rainyDays: {
+      predicted: 9,
+      actual: 7,
+      remaining: 15
+    },
+    riskLevel: 'medium',
+    lastIncident: '2023-06-10'
+  },
+  {
+    id: '5',
+    name: 'North Loop Reconstruction',
+    location: 'San Antonio, TX',
+    coordinates: '29.4241° N, 98.4936° W',
+    startDate: '2023-05-12',
+    endDate: '2023-12-01',
+    status: 'active',
+    rainyDays: {
+      predicted: 7,
+      actual: 5,
+      remaining: 18
+    },
+    riskLevel: 'low',
+    lastIncident: '2023-06-08'
+  }
+];
+
+const getRiskBadgeColor = (risk: string) => {
+  switch (risk) {
+    case 'high':
+      return 'bg-red-100 text-red-800';
+    case 'medium':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'low':
+      return 'bg-green-100 text-green-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
 
 const Projects = () => {
   return (
@@ -29,12 +130,79 @@ const Projects = () => {
         <div className="text-3xl font-bold">Projects Map</div>
         <p className="text-muted-foreground">Interactive map view of all construction projects.</p>
         
-        <div className="h-[400px] flex items-center justify-center bg-secondary/30 rounded-lg border border-border">
-          <div className="text-center">
-            <h3 className="text-xl font-medium mb-2">Projects Map Content</h3>
-            <p className="text-muted-foreground max-w-md">
-              This is a placeholder for the Projects Map page. Detailed content will be added soon.
-            </p>
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input 
+              className="pl-10" 
+              placeholder="Search projects by name or location..."
+            />
+          </div>
+          <Button variant="outline">Filter</Button>
+          <Button>Add New Project</Button>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card className="h-[500px]">
+              <CardHeader>
+                <CardTitle>Project Locations</CardTitle>
+                <CardDescription>Showing 5 active construction projects</CardDescription>
+              </CardHeader>
+              <CardContent className="relative h-[400px] bg-muted/50 rounded-md flex items-center justify-center">
+                <div className="text-center">
+                  <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    Interactive map will be displayed here.<br />
+                    Connect to Mapbox for full functionality.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="lg:col-span-1 space-y-6">
+            <div className="flex justify-between items-center">
+              <h3 className="font-medium">Project List</h3>
+              <Button variant="ghost" size="sm">View All</Button>
+            </div>
+            
+            {projects.map(project => (
+              <Card key={project.id} className="hover:shadow-md transition-shadow">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">{project.name}</CardTitle>
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {project.location}
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-2 pb-4">
+                  <div className="flex justify-between text-sm">
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-1 text-muted-foreground" />
+                      <span>
+                        {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between text-sm">
+                    <div className="flex items-center">
+                      <CloudRain className="h-4 w-4 mr-1 text-blue-500" />
+                      <span>
+                        {project.rainyDays.actual}/{project.rainyDays.predicted} rainy days
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <AlertCircle className="h-4 w-4 mr-1 text-muted-foreground" />
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getRiskBadgeColor(project.riskLevel)}`}>
+                        {project.riskLevel.charAt(0).toUpperCase() + project.riskLevel.slice(1)} risk
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
