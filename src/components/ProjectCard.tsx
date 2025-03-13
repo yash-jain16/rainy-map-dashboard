@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, CalendarIcon, CloudRainIcon, TrendingUpIcon } from 'lucide-react';
@@ -105,12 +105,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         <div className="text-xs text-muted-foreground">
           Last updated: {project.lastRainfall.date}
         </div>
-        <a 
-          href={`/projects/${project.id}`} 
+        <Link 
+          to={`/projects/${project.id}`} 
           className="text-xs text-primary font-medium hover:underline"
         >
           View Details
-        </a>
+        </Link>
       </CardFooter>
     </Card>
   );
