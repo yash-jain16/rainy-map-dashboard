@@ -97,8 +97,19 @@ export const RainfallChart: React.FC<RainfallChartProps> = ({ data, threshold })
                 dataKey="rainfall"
                 radius={[4, 4, 0, 0]}
                 barSize={30}
-                fill={(entry) => entry.isRainyDay ? '#0EA5E9' : '#D3E4FD'}
-              />
+                fill="#D3E4FD"
+                // Instead of a function, use the fillOpacity to create a visual distinction
+                fillOpacity={0.8}
+                // Using a color for all bars, with a className to style them differently
+                className="rainfall-bar"
+              >
+                {data.map((entry, index) => (
+                  <rect
+                    key={`bar-${index}`}
+                    fill={entry.isRainyDay ? '#0EA5E9' : '#D3E4FD'}
+                  />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>

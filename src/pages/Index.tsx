@@ -70,12 +70,12 @@ const rainfallData = [
 ];
 
 const monthlyPayouts = [
-  { month: 'January 2023', predicted: 8, actual: 12, status: 'paid', amount: 3500, date: '2023-02-05' },
-  { month: 'February 2023', predicted: 6, actual: 9, status: 'paid', amount: 2800, date: '2023-03-05' },
-  { month: 'March 2023', predicted: 9, actual: 8, status: 'pending', amount: 0 },
-  { month: 'April 2023', predicted: 7, actual: 10, status: 'paid', amount: 3200, date: '2023-05-05' },
-  { month: 'May 2023', predicted: 8, actual: 14, status: 'paid', amount: 4100, date: '2023-06-05' },
-  { month: 'June 2023', predicted: 8, actual: 10, status: 'triggered', amount: 3500 },
+  { month: 'January 2023', predicted: 8, actual: 12, status: 'paid' as const, amount: 3500, date: '2023-02-05' },
+  { month: 'February 2023', predicted: 6, actual: 9, status: 'paid' as const, amount: 2800, date: '2023-03-05' },
+  { month: 'March 2023', predicted: 9, actual: 8, status: 'pending' as const, amount: 0 },
+  { month: 'April 2023', predicted: 7, actual: 10, status: 'paid' as const, amount: 3200, date: '2023-05-05' },
+  { month: 'May 2023', predicted: 8, actual: 14, status: 'paid' as const, amount: 4100, date: '2023-06-05' },
+  { month: 'June 2023', predicted: 8, actual: 10, status: 'triggered' as const, amount: 3500 },
 ];
 
 const Index = () => {
