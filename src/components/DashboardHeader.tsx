@@ -1,11 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner";
 import { 
   BellIcon, 
   SettingsIcon, 
   SearchIcon,
-  UserIcon
+  UserIcon,
+  MenuIcon
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -16,11 +19,30 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useSidebar } from '@/components/ui/sidebar';
 
 export const DashboardHeader: React.FC = () => {
+  const navigate = useNavigate();
+  const { state } = useSidebar();
+  const [notificationsCount, setNotificationsCount] = useState(3);
+  
+  const handleNotificationsClick = () => {
+    toast.success("Notifications marked as read");
+    setNotificationsCount(0);
+  };
+  
+  const handleProfileClick = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center justify-between px-6 transition-all duration-200">
       <div className="flex items-center gap-4">
+        {state === "collapsed" && (
+          <Button variant="ghost" size="icon" className="md:flex">
+            <MenuIcon size={20} className="text-muted-foreground" />
+          </Button>
+        )}
         <SidebarTrigger className="md:hidden" />
         <div className="relative hidden md:flex items-center">
           <SearchIcon size={18} className="absolute left-3 text-muted-foreground" />
@@ -33,12 +55,46 @@ export const DashboardHeader: React.FC = () => {
       </div>
       
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" className="relative">
-          <BellIcon size={20} className="text-muted-foreground" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="relative" onClick={handleNotificationsClick}>
+              <BellIcon size={20} className="text-muted-foreground" />
+              {notificationsCount > 0 && (
+                <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-72">
+            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <div className="max-h-80 overflow-auto">
+              <DropdownMenuItem className="cursor-pointer">
+                <div className="flex flex-col gap-1">
+                  <p className="font-medium">New rainfall data available</p>
+                  <span className="text-xs text-muted-foreground">5 minutes ago</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <div className="flex flex-col gap-1">
+                  <p className="font-medium">Project status updated</p>
+                  <span className="text-xs text-muted-foreground">2 hours ago</span>
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <div className="flex flex-col gap-1">
+                  <p className="font-medium">Payment processed successfully</p>
+                  <span className="text-xs text-muted-foreground">1 day ago</span>
+                </div>
+              </DropdownMenuItem>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-primary cursor-pointer" onClick={() => navigate('/notifications')}>
+              View all notifications
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" onClick={() => navigate('/settings')}>
           <SettingsIcon size={20} className="text-muted-foreground" />
         </Button>
         
@@ -53,11 +109,21 @@ export const DashboardHeader: React.FC = () => {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Notifications</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => handleProfileClick('/profile')}>
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => handleProfileClick('/notifications')}>
+              Notifications
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => handleProfileClick('/settings')}>
+              Settings
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
+            <DropdownMenuItem className="text-destructive cursor-pointer" onClick={() => {
+              toast.success("Successfully logged out");
+              // In a real app, you would have a logout function here
+              setTimeout(() => navigate('/'), 1000);
+            }}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -66,3 +132,4 @@ export const DashboardHeader: React.FC = () => {
     </header>
   );
 };
+
