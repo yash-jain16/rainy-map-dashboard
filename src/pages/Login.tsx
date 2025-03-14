@@ -1,35 +1,46 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 import { CloudRainIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // For demo purposes, we're just checking for any input
     if (!email || !password) {
       toast.error('Please enter both email and password');
       return;
     }
     
-    // In a real app, you'd call an authentication API here
-    toast.success('Successfully logged in');
-    
-    // Simulate loading
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
+    try {
+      setIsLoading(true);
+      // Calls the login method from our useAuth hook
+      await login(email, password);
+      
+      // If "remember me" is not checked, we'll use session storage instead
+      if (!rememberMe) {
+        // Note: Our authentication already stores the token in localStorage
+        // You might want to implement session-based storage logic here
+      }
+    } catch (error) {
+      // Error handling is managed by the useMutation in the useAuth hook
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -58,6 +69,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             
@@ -82,6 +94,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             
@@ -91,6 +104,7 @@ const Login = () => {
                   id="remember" 
                   checked={rememberMe}
                   onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                  disabled={isLoading}
                 />
                 <Label 
                   htmlFor="remember" 
@@ -102,8 +116,8 @@ const Login = () => {
             </div>
             
             <div>
-              <Button type="submit" className="w-full">
-                Sign in
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Signing in...' : 'Sign in'}
               </Button>
             </div>
           </form>
@@ -125,6 +139,7 @@ const Login = () => {
                 variant="outline" 
                 className="w-full"
                 onClick={() => toast.info('Registration functionality would go here')}
+                disabled={isLoading}
               >
                 Create an account
               </Button>
