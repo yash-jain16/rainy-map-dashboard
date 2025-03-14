@@ -23,7 +23,7 @@ import { useSidebar } from '@/components/ui/sidebar';
 
 export const DashboardHeader: React.FC = () => {
   const navigate = useNavigate();
-  const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
   const [notificationsCount, setNotificationsCount] = useState(3);
   
   const handleNotificationsClick = () => {
@@ -39,7 +39,7 @@ export const DashboardHeader: React.FC = () => {
     <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center justify-between px-6 transition-all duration-200">
       <div className="flex items-center gap-4">
         {state === "collapsed" && (
-          <Button variant="ghost" size="icon" className="md:flex">
+          <Button variant="ghost" size="icon" className="md:flex" onClick={toggleSidebar}>
             <MenuIcon size={20} className="text-muted-foreground" />
           </Button>
         )}
