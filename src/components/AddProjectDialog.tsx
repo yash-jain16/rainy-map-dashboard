@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -214,14 +213,14 @@ export const AddProjectDialog: React.FC<AddProjectDialogProps> = ({ trigger }) =
                   <div className="border rounded-lg overflow-hidden">
                     <GoogleMap
                       mapContainerStyle={mapContainerStyle}
+                      mapContainerClassName={isDrawing ? 'cursor-crosshair' : 'cursor-default'}
                       center={defaultCenter}
                       zoom={12}
                       onClick={handleMapClick}
                       onLoad={(map) => { mapRef.current = map; }}
                       options={{
                         mapTypeControl: false,
-                        streetViewControl: false,
-                        cursor: isDrawing ? 'crosshair' : 'default'
+                        streetViewControl: false
                       }}
                     >
                       {polygonCoords.length > 0 && (
