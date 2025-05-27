@@ -13,6 +13,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { RainfallChart } from '@/components/RainfallChart';
 import { RainyDayTracker } from '@/components/RainyDayTracker';
+import { ClaimForm } from '@/components/ClaimForm';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, CloudRain, TrendingUp, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -175,6 +176,14 @@ const ProjectDetail = () => {
             {project.riskLevel.charAt(0).toUpperCase() + project.riskLevel.slice(1)} Risk
           </Badge>
         </div>
+
+        {isPayoutTriggered && (
+          <ClaimForm
+            projectName={project.name}
+            actualRainyDays={project.rainyDays.actual}
+            predictedRainyDays={project.rainyDays.predicted}
+          />
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
