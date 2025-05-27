@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { 
@@ -13,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, MapPin, Calendar, CloudRain, AlertCircle } from 'lucide-react';
+import { WeatherMap } from '@/components/WeatherMap';
+import { AddProjectDialog } from '@/components/AddProjectDialog';
 
 // Mock project data
 const projects = [
@@ -139,26 +140,12 @@ const Projects = () => {
             />
           </div>
           <Button variant="outline">Filter</Button>
-          <Button>Add New Project</Button>
+          <AddProjectDialog />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <Card className="h-[500px]">
-              <CardHeader>
-                <CardTitle>Project Locations</CardTitle>
-                <CardDescription>Showing 5 active construction projects</CardDescription>
-              </CardHeader>
-              <CardContent className="relative h-[400px] bg-muted/50 rounded-md flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Interactive map will be displayed here.<br />
-                    Connect to Mapbox for full functionality.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <WeatherMap />
           </div>
           
           <div className="lg:col-span-1 space-y-6">
