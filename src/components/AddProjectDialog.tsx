@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -6,9 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import { GoogleMap, useJsApiLoader, Polygon } from '@react-google-maps/api';
+import { GoogleMap, Polygon } from '@react-google-maps/api';
 import { Plus, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
 
 interface ProjectFormData {
   name: string;
@@ -43,7 +45,7 @@ export const AddProjectDialog: React.FC<AddProjectDialogProps> = ({ trigger }) =
   const [open, setOpen] = useState(false);
   const [isDrawing, setIsDrawing] = useState(false);
   const [polygonCoords, setPolygonCoords] = useState<PolygonCoordinate[]>([]);
-  const [mapApiKey, setMapApiKey] = useState<string | null>(localStorage.getItem('google_maps_api_key'));
+  const { isLoaded, mapApiKey, setMapApiKey } = useGoogleMaps();
   
   const form = useForm<ProjectFormData>({
     defaultValues: {
@@ -57,12 +59,6 @@ export const AddProjectDialog: React.FC<AddProjectDialogProps> = ({ trigger }) =
   });
 
   const mapRef = useRef<google.maps.Map | null>(null);
-  
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: mapApiKey || '',
-    libraries: ['drawing']
-  });
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (!isDrawing || !event.latLng) return;
@@ -123,9 +119,7 @@ export const AddProjectDialog: React.FC<AddProjectDialogProps> = ({ trigger }) =
     const apiKey = formData.get('apiKey') as string;
     
     if (apiKey) {
-      localStorage.setItem('google_maps_api_key', apiKey);
       setMapApiKey(apiKey);
-      window.location.reload();
     }
   };
 

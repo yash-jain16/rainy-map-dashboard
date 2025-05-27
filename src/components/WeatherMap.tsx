@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MapPinIcon } from 'lucide-react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
+import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
 
 // Map container styles
 const containerStyle = {
@@ -29,13 +30,7 @@ const projectLocations = [
 export const WeatherMap: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
-  const [mapApiKey, setMapApiKey] = useState<string | null>(localStorage.getItem('google_maps_api_key'));
-  
-  // Load Google Maps JavaScript API
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: mapApiKey || ''
-  });
+  const { isLoaded, mapApiKey, setMapApiKey } = useGoogleMaps();
 
   useEffect(() => {
     // Simulate loading if API key is present
@@ -54,9 +49,7 @@ export const WeatherMap: React.FC = () => {
     const apiKey = formData.get('apiKey') as string;
     
     if (apiKey) {
-      localStorage.setItem('google_maps_api_key', apiKey);
       setMapApiKey(apiKey);
-      window.location.reload(); // Reload to apply new API key
     }
   };
 
