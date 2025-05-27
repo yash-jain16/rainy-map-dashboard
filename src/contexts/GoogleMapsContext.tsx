@@ -10,7 +10,7 @@ interface GoogleMapsContextType {
 
 const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(undefined);
 
-const libraries: ("drawing" | "geometry" | "localContext" | "places" | "visualization")[] = ['drawing'];
+const libraries: ("drawing" | "geometry" | "places" | "visualization")[] = ['drawing', 'places'];
 
 export const GoogleMapsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mapApiKey, setMapApiKeyState] = useState<string | null>(
