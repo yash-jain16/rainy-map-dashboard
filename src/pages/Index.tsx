@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -7,6 +6,7 @@ import { PayoutStatus } from '@/components/PayoutStatus';
 import { CompanyStats } from '@/components/CompanyStats';
 import { RegionalOverview } from '@/components/RegionalOverview';
 import { PayoutBreakdown } from '@/components/PayoutBreakdown';
+import { PerilOverview } from '@/components/PerilOverview';
 
 // Mock data
 const projects = [
@@ -87,12 +87,21 @@ const payoutBreakdownData = [
   { name: 'Pending', value: 9300, color: '#6B7280', count: 7 },
 ];
 
+// New peril overview data
+const perilData = [
+  { name: 'Rainfall', active: 32, triggered: 8, coverage: '€2.4M' },
+  { name: 'Temperature', active: 18, triggered: 3, coverage: '€1.8M' },
+  { name: 'Snowfall', active: 12, triggered: 2, coverage: '€950K' },
+  { name: 'Wind', active: 8, triggered: 1, coverage: '€600K' },
+  { name: 'Fire Risk', active: 5, triggered: 0, coverage: '€1.2M' },
+];
+
 const Index = () => {
   return (
     <Layout>
       <div className="mb-8">
-        <h1 className="font-medium text-3xl leading-tight">Weather Dashboard</h1>
-        <p className="text-muted-foreground mt-1 mb-0">Monitor rainfall and weather conditions across your construction projects</p>
+        <h1 className="font-medium text-3xl leading-tight">Harbour Weather Risk Dashboard</h1>
+        <p className="text-muted-foreground mt-1 mb-0">Comprehensive weather risk management across multiple perils for your construction portfolio</p>
       </div>
       
       <div className="mb-8 animate-fade-up" style={{ animationDelay: '100ms' }}>
@@ -104,6 +113,10 @@ const Index = () => {
           averageRainyDays={companyStats.averageRainyDays}
           highRiskProjects={companyStats.highRiskProjects}
         />
+      </div>
+      
+      <div className="mb-8 animate-fade-up" style={{ animationDelay: '150ms' }}>
+        <PerilOverview data={perilData} />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
