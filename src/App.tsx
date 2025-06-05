@@ -44,6 +44,8 @@ const App = () => (
               <Route path="/projects/:projectId" element={<ProjectDetail />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/analytics" element={<Analytics />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/actuarial" element={<ActuarialWorkspace />} />
               <Route path="/settings" element={<Settings />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
