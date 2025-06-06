@@ -39,12 +39,25 @@ export const DashboardHeader: React.FC = () => {
     <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center justify-between px-6 transition-all duration-200">
       <div className="flex items-center gap-4">
         {state === "collapsed" && (
-          <Button variant="ghost" size="icon" className="md:flex" onClick={toggleSidebar}>
-            <MenuIcon size={20} className="text-muted-foreground" />
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="md:flex" onClick={toggleSidebar}>
+              <MenuIcon size={20} className="text-muted-foreground" />
+            </Button>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <div className="w-4 h-4 bg-white rounded-sm relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-sm"></div>
+                  <div className="absolute top-1 left-1 w-2 h-1 bg-blue-600 rounded-sm"></div>
+                </div>
+              </div>
+              <span className="font-semibold text-lg hidden md:block">Harbour</span>
+            </div>
+          </div>
         )}
-        <SidebarTrigger className="md:hidden" />
-        <div className="relative hidden md:flex items-center">
+        {state === "expanded" && (
+          <SidebarTrigger className="md:hidden" />
+        )}
+        <div className="relative hidden md:flex items-center ml-auto md:ml-0">
           <SearchIcon size={18} className="absolute left-3 text-muted-foreground" />
           <input 
             type="text" 
@@ -132,4 +145,3 @@ export const DashboardHeader: React.FC = () => {
     </header>
   );
 };
-

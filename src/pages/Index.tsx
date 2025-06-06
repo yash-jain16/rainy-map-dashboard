@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -100,8 +101,18 @@ const Index = () => {
   return (
     <Layout>
       <div className="mb-8">
-        <h1 className="font-medium text-3xl leading-tight">Harbour Weather Risk Dashboard</h1>
-        <p className="text-muted-foreground mt-1 mb-0">Comprehensive weather risk management across multiple perils for your construction portfolio</p>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-5 h-5 bg-white rounded-sm relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-sm"></div>
+              <div className="absolute top-1 left-1 w-2.5 h-1 bg-blue-600 rounded-sm"></div>
+            </div>
+          </div>
+          <div>
+            <h1 className="font-semibold text-3xl leading-tight text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground text-sm mt-0.5">Weather risk intelligence for construction projects</p>
+          </div>
+        </div>
       </div>
       
       <div className="mb-8 animate-fade-up" style={{ animationDelay: '100ms' }}>
