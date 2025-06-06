@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -88,13 +87,13 @@ const payoutBreakdownData = [
   { name: 'Pending', value: 9300, color: '#6B7280', count: 7 },
 ];
 
-// New peril overview data
+// Enhanced peril data with purchased status
 const perilData = [
-  { name: 'Rainfall', active: 32, triggered: 8, coverage: '€2.4M' },
-  { name: 'Temperature', active: 18, triggered: 3, coverage: '€1.8M' },
-  { name: 'Snowfall', active: 12, triggered: 2, coverage: '€950K' },
-  { name: 'Wind', active: 8, triggered: 1, coverage: '€600K' },
-  { name: 'Fire Risk', active: 5, triggered: 0, coverage: '€1.2M' },
+  { name: 'Rainfall', active: 32, triggered: 8, coverage: '€2.4M', purchased: true },
+  { name: 'Temperature', active: 18, triggered: 3, coverage: '€1.8M', purchased: true },
+  { name: 'Snowfall', active: 12, triggered: 2, coverage: '€950K', purchased: true },
+  { name: 'Wind', active: 8, triggered: 1, coverage: '€600K', purchased: false },
+  { name: 'Fire Risk', active: 5, triggered: 0, coverage: '€1.2M', purchased: false },
 ];
 
 const Index = () => {
@@ -110,7 +109,7 @@ const Index = () => {
           </div>
           <div>
             <h1 className="font-semibold text-3xl leading-tight text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground text-sm mt-0.5">Weather risk intelligence for construction projects</p>
+            <p className="text-muted-foreground text-sm mt-0.5">Weather risk intelligence</p>
           </div>
         </div>
       </div>
