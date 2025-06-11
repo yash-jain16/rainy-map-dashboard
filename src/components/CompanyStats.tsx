@@ -9,7 +9,6 @@ interface CompanyStatsProps {
   activeProjects: number;
   totalPayoutsTriggered: number;
   totalPayoutAmount: number;
-  averageRainyDays: number;
   highRiskProjects: number;
 }
 
@@ -18,7 +17,6 @@ export const CompanyStats: React.FC<CompanyStatsProps> = ({
   activeProjects,
   totalPayoutsTriggered,
   totalPayoutAmount,
-  averageRainyDays,
   highRiskProjects,
 }) => {
   return (
@@ -61,15 +59,15 @@ export const CompanyStats: React.FC<CompanyStatsProps> = ({
         <CardContent className="p-6">
           <div className="flex items-center justify-between space-x-2">
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Avg. Rainy Days</p>
-              <h2 className="text-3xl font-bold">{averageRainyDays}</h2>
+              <p className="text-sm font-medium text-muted-foreground">High Risk Projects</p>
+              <h2 className="text-3xl font-bold">{highRiskProjects}</h2>
             </div>
-            <div className="p-2 bg-rain/10 rounded-full text-rain">
-              <UmbrellaIcon size={20} />
+            <div className="p-2 bg-destructive/10 rounded-full text-destructive">
+              <AlertTriangleIcon size={20} />
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            {highRiskProjects} high-risk projects
+            Requiring close monitoring
           </p>
         </CardContent>
       </Card>
