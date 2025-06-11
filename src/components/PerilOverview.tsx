@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +11,7 @@ import {
   MessageCircleIcon
 } from 'lucide-react';
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
 
 interface PerilOverviewProps {
   data: {
@@ -58,8 +58,18 @@ const getPerilColor = (name: string) => {
 };
 
 export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
+  const navigate = useNavigate();
+
   const handleContactTeam = (perilName: string) => {
     toast.success(`Our team will contact you about ${perilName} coverage`);
+  };
+
+  const handlePerilClick = (perilName: string) => {
+    if (perilName === 'Fire Risk') {
+      navigate('/peril-insights/fire-risk');
+    } else {
+      navigate(`/peril-insights/${perilName.toLowerCase()}`);
+    }
   };
 
   return (
@@ -77,8 +87,9 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
               <div 
                 key={peril.name} 
                 className={`p-4 rounded-lg border transition-all duration-200 hover:shadow-md hover:scale-105 ${
-                  peril.purchased ? 'bg-secondary/30 hover:bg-secondary/40' : 'bg-gray-50/50 border-dashed hover:bg-gray-50/70'
+                  peril.purchased ? 'bg-secondary/30 hover:bg-secondary/40 cursor-pointer' : 'bg-gray-50/50 border-dashed hover:bg-gray-50/70'
                 }`}
+                onClick={peril.purchased ? () => handlePerilClick(peril.name) : undefined}
               >
                 <div className="flex items-center gap-2 mb-3">
                   <div className={`p-2 rounded-full transition-opacity ${colorClass} ${!peril.purchased ? 'opacity-60' : ''}`}>
@@ -113,6 +124,10 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
                       <span className="text-xs text-muted-foreground">Coverage</span>
                       <span className="text-xs font-medium">{peril.coverage}</span>
                     </div>
+                    
+                    <div className="pt-2 border-t">
+                      <p className="text-xs text-muted-foreground">Click for detailed insights</p>
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -123,7 +138,10 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
                       size="sm" 
                       variant="outline" 
                       className="w-full text-xs h-8 hover:bg-primary hover:text-primary-foreground transition-colors"
-                      onClick={() => handleContactTeam(peril.name)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleContactTeam(peril.name);
+                      }}
                     >
                       <MessageCircleIcon size={12} className="mr-1" />
                       Contact Our Team
@@ -138,3 +156,5 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
     </Card>
   );
 };
+
+export default PerilOverview;
