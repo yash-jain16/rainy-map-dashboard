@@ -9,8 +9,7 @@ import {
   SnowflakeIcon, 
   WindIcon, 
   FlameIcon,
-  PhoneIcon,
-  FileTextIcon
+  MessageCircleIcon
 } from 'lucide-react';
 import { toast } from "sonner";
 
@@ -59,16 +58,12 @@ const getPerilColor = (name: string) => {
 };
 
 export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
-  const handleRequestQuote = (perilName: string) => {
-    toast.success(`Quote request submitted for ${perilName} coverage`);
-  };
-
-  const handleSetupCall = (perilName: string) => {
-    toast.success(`Call scheduled to discuss ${perilName} coverage`);
+  const handleContactTeam = (perilName: string) => {
+    toast.success(`Our team will contact you about ${perilName} coverage`);
   };
 
   return (
-    <Card className="glass-card">
+    <Card className="glass-card hover:shadow-lg transition-all duration-300">
       <CardHeader>
         <CardTitle className="text-xl font-medium">Weather Peril Coverage</CardTitle>
       </CardHeader>
@@ -81,19 +76,19 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
             return (
               <div 
                 key={peril.name} 
-                className={`p-4 rounded-lg border ${
-                  peril.purchased ? 'bg-secondary/30' : 'bg-gray-50/50 border-dashed'
+                className={`p-4 rounded-lg border transition-all duration-200 hover:shadow-md hover:scale-105 ${
+                  peril.purchased ? 'bg-secondary/30 hover:bg-secondary/40' : 'bg-gray-50/50 border-dashed hover:bg-gray-50/70'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <div className={`p-2 rounded-full ${colorClass} ${!peril.purchased ? 'opacity-60' : ''}`}>
+                  <div className={`p-2 rounded-full transition-opacity ${colorClass} ${!peril.purchased ? 'opacity-60' : ''}`}>
                     <IconComponent size={16} />
                   </div>
                   <h3 className={`font-medium text-sm ${!peril.purchased ? 'text-muted-foreground' : ''}`}>
                     {peril.name}
                   </h3>
                   {!peril.purchased && (
-                    <Badge variant="outline" className="text-xs">Not Purchased</Badge>
+                    <Badge variant="outline" className="text-xs">Available</Badge>
                   )}
                 </div>
                 
@@ -120,30 +115,19 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-2">
-                    <p className="text-xs text-muted-foreground mb-3">
-                      Protect your projects with {peril.name.toLowerCase()} coverage
+                  <div className="space-y-3">
+                    <p className="text-xs text-muted-foreground">
+                      Expand your protection with {peril.name.toLowerCase()} coverage
                     </p>
-                    <div className="flex flex-col gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="w-full text-xs h-7"
-                        onClick={() => handleRequestQuote(peril.name)}
-                      >
-                        <FileTextIcon size={12} className="mr-1" />
-                        Request Quote
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="ghost" 
-                        className="w-full text-xs h-7"
-                        onClick={() => handleSetupCall(peril.name)}
-                      >
-                        <PhoneIcon size={12} className="mr-1" />
-                        Setup Call
-                      </Button>
-                    </div>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="w-full text-xs h-8 hover:bg-primary hover:text-primary-foreground transition-colors"
+                      onClick={() => handleContactTeam(peril.name)}
+                    >
+                      <MessageCircleIcon size={12} className="mr-1" />
+                      Contact Our Team
+                    </Button>
                   </div>
                 )}
               </div>

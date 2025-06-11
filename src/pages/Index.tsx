@@ -1,12 +1,15 @@
+
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { ProjectCard } from '@/components/ProjectCard';
 import { WeatherMap } from '@/components/WeatherMap';
 import { PayoutStatus } from '@/components/PayoutStatus';
 import { CompanyStats } from '@/components/CompanyStats';
-import { RegionalOverview } from '@/components/RegionalOverview';
 import { PayoutBreakdown } from '@/components/PayoutBreakdown';
 import { PerilOverview } from '@/components/PerilOverview';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUpIcon, AlertTriangleIcon, ShieldCheckIcon } from 'lucide-react';
 
 // Mock data
 const projects = [
@@ -60,24 +63,20 @@ const monthlyPayouts = [
   { month: 'June 2023', predicted: 8, actual: 10, status: 'triggered' as const, amount: 3500, date: '' },
 ];
 
-// New mock data for company statistics
+// Updated company statistics without average rainy days
 const companyStats = {
   totalProjects: 32,
   activeProjects: 24,
   totalPayoutsTriggered: 8,
   totalPayoutAmount: 42000,
-  averageRainyDays: 9.5,
   highRiskProjects: 5,
 };
 
-// Regional overview data
-const regionalData = [
-  { region: 'Austin', projects: 8, rainyDays: 12, payoutRisk: 'high' as const },
-  { region: 'Houston', projects: 6, rainyDays: 9, payoutRisk: 'medium' as const },
-  { region: 'Dallas', projects: 5, rainyDays: 6, payoutRisk: 'low' as const },
-  { region: 'San Antonio', projects: 7, rainyDays: 8, payoutRisk: 'medium' as const },
-  { region: 'El Paso', projects: 3, rainyDays: 4, payoutRisk: 'low' as const },
-  { region: 'Corpus Christi', projects: 3, rainyDays: 11, payoutRisk: 'high' as const },
+// Portfolio insights data to replace regional overview
+const portfolioInsights = [
+  { metric: 'Total Coverage', value: '€8.2M', trend: '+12%', icon: ShieldCheckIcon, color: 'text-blue-600' },
+  { metric: 'Active Policies', value: '156', trend: '+8%', icon: TrendingUpIcon, color: 'text-green-600' },
+  { metric: 'High Risk Events', value: '23', trend: '+15%', icon: AlertTriangleIcon, color: 'text-orange-600' },
 ];
 
 // Payout breakdown data
@@ -114,34 +113,60 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="mb-8 animate-fade-up" style={{ animationDelay: '100ms' }}>
+      <div className="mb-8 animate-fade-up hover-scale" style={{ animationDelay: '100ms' }}>
         <CompanyStats 
           totalProjects={companyStats.totalProjects}
           activeProjects={companyStats.activeProjects}
           totalPayoutsTriggered={companyStats.totalPayoutsTriggered}
           totalPayoutAmount={companyStats.totalPayoutAmount}
-          averageRainyDays={companyStats.averageRainyDays}
           highRiskProjects={companyStats.highRiskProjects}
         />
       </div>
       
-      <div className="mb-8 animate-fade-up" style={{ animationDelay: '150ms' }}>
+      <div className="mb-8 animate-fade-up hover-scale" style={{ animationDelay: '150ms' }}>
         <PerilOverview data={perilData} />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {projects.map((project) => (
-          <div key={project.id} className="animate-fade-up" style={{ animationDelay: `${projects.indexOf(project) * 100 + 200}ms` }}>
+          <div key={project.id} className="animate-fade-up hover-scale" style={{ animationDelay: `${projects.indexOf(project) * 100 + 200}ms` }}>
             <ProjectCard project={project} />
           </div>
         ))}
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div className="animate-fade-up" style={{ animationDelay: '500ms' }}>
-          <RegionalOverview data={regionalData} />
+        <div className="animate-fade-up hover-scale" style={{ animationDelay: '500ms' }}>
+          <Card className="glass-card">
+            <CardHeader>
+              <CardTitle className="text-xl font-medium">Portfolio Insights</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-4">
+                {portfolioInsights.map((insight, index) => {
+                  const IconComponent = insight.icon;
+                  return (
+                    <div key={insight.metric} className="flex items-center justify-between p-4 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-full bg-background shadow-sm ${insight.color}`}>
+                          <IconComponent size={16} />
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">{insight.metric}</p>
+                          <p className="text-2xl font-bold">{insight.value}</p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {insight.trend}
+                      </Badge>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
-        <div className="animate-fade-up" style={{ animationDelay: '600ms' }}>
+        <div className="animate-fade-up hover-scale" style={{ animationDelay: '600ms' }}>
           <PayoutBreakdown 
             data={payoutBreakdownData} 
             totalAmount={42000} 
@@ -151,10 +176,10 @@ const Index = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="animate-fade-up" style={{ animationDelay: '700ms' }}>
+        <div className="animate-fade-up hover-scale" style={{ animationDelay: '700ms' }}>
           <WeatherMap />
         </div>
-        <div className="animate-fade-up" style={{ animationDelay: '800ms' }}>
+        <div className="animate-fade-up hover-scale" style={{ animationDelay: '800ms' }}>
           <PayoutStatus monthlyPayouts={monthlyPayouts} />
         </div>
       </div>
