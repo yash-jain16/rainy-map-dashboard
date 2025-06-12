@@ -21,10 +21,7 @@ import {
   CalendarIcon,
   BarChart3Icon, 
   SettingsIcon,
-  LogOutIcon,
-  ShieldIcon,
-  UsersIcon,
-  Database
+  LogOutIcon
 } from "lucide-react";
 import { cn } from '@/lib/utils';
 
@@ -32,15 +29,9 @@ const menuItems = [
   { name: 'Dashboard', icon: HomeIcon, path: '/' },
   { name: 'Weather Perils', icon: CloudRainIcon, path: '/weather' },
   { name: 'Projects', icon: MapPinIcon, path: '/projects' },
-  { name: 'Risk Management', icon: ShieldIcon, path: '/risk-management' },
   { name: 'Forecast', icon: CalendarIcon, path: '/forecast' },
   { name: 'Analytics', icon: BarChart3Icon, path: '/analytics' },
   { name: 'Settings', icon: SettingsIcon, path: '/settings' },
-];
-
-const adminMenuItems = [
-  { name: 'Admin Dashboard', icon: Database, path: '/admin' },
-  { name: 'Actuarial Workspace', icon: UsersIcon, path: '/actuarial' },
 ];
 
 export const DashboardSidebar: React.FC = () => {
@@ -70,36 +61,6 @@ export const DashboardSidebar: React.FC = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton 
-                    asChild
-                    className={cn(
-                      "group transition-all duration-200",
-                      activeItem === item.path ? "text-primary font-medium" : "text-muted-foreground"
-                    )}
-                  >
-                    <Link to={item.path} className="flex items-center gap-3">
-                      <item.icon 
-                        size={20} 
-                        className={cn(
-                          "transition-all duration-200",
-                          activeItem === item.path ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
-                        )} 
-                      />
-                      <span>{item.name}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Internal Tools</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {adminMenuItems.map((item) => (
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton 
                     asChild

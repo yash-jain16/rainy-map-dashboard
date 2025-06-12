@@ -10,11 +10,8 @@ import Index from "./pages/Index";
 import Weather from "./pages/Weather";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
-import RiskManagement from "./pages/RiskManagement";
 import Forecast from "./pages/Forecast";
 import Analytics from "./pages/Analytics";
-import ActuarialWorkspace from "./pages/ActuarialWorkspace";
-import AdminDashboard from "./pages/AdminDashboard";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -45,11 +42,8 @@ const App = () => (
               <Route path="/weather" element={<Weather />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/projects/:projectId" element={<ProjectDetail />} />
-              <Route path="/risk-management" element={<RiskManagement />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/analytics" element={<Analytics />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/actuarial" element={<ActuarialWorkspace />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/notifications" element={<Notifications />} />
