@@ -24,6 +24,7 @@ import {
   LogOutIcon
 } from "lucide-react";
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
 
 const menuItems = [
   { name: 'Dashboard', icon: HomeIcon, path: '/' },
@@ -37,6 +38,7 @@ const menuItems = [
 export const DashboardSidebar: React.FC = () => {
   const location = useLocation();
   const activeItem = location.pathname;
+  const { logout } = useAuth();
   
   return (
     <Sidebar>
@@ -91,7 +93,7 @@ export const DashboardSidebar: React.FC = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="text-muted-foreground hover:text-destructive transition-colors duration-200">
-              <button className="flex items-center gap-3">
+              <button className="flex items-center gap-3" onClick={logout}>
                 <LogOutIcon size={20} />
                 <span>Logout</span>
               </button>

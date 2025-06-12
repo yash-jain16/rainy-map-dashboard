@@ -20,10 +20,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useSidebar } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/useAuth';
 
 export const DashboardHeader: React.FC = () => {
   const navigate = useNavigate();
   const { state, toggleSidebar } = useSidebar();
+  const { logout } = useAuth();
   const [notificationsCount, setNotificationsCount] = useState(3);
   
   const handleNotificationsClick = () => {
@@ -33,7 +35,7 @@ export const DashboardHeader: React.FC = () => {
   
   const handleProfileClick = (path: string) => {
     if (path === '/profile') {
-      toast.info("Profile page coming soon");
+      navigate('/profile');
       return;
     }
     navigate(path);
@@ -129,18 +131,14 @@ export const DashboardHeader: React.FC = () => {
             <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => handleProfileClick('/profile')}>
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => toast.info("All notifications viewed")}>
+            <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => navigate('/notifications')}>
               Notifications
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => handleProfileClick('/settings')}>
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive cursor-pointer hover:bg-destructive/10 transition-colors" onClick={() => {
-              toast.success("Successfully logged out");
-              // In a real app, you would have a logout function here
-              setTimeout(() => navigate('/'), 1000);
-            }}>
+            <DropdownMenuItem className="text-destructive cursor-pointer hover:bg-destructive/10 transition-colors" onClick={logout}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
