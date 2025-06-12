@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { 
@@ -123,12 +124,12 @@ const Projects = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Projects Map</BreadcrumbPage>
+              <BreadcrumbPage>Projects</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="text-3xl font-bold">Projects Map</div>
+        <div className="text-3xl font-bold">Projects</div>
         <p className="text-muted-foreground">Interactive map view of all construction projects.</p>
         
         <div className="flex items-center space-x-4 mb-6">
