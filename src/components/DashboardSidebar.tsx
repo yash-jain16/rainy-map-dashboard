@@ -31,7 +31,7 @@ import { cn } from '@/lib/utils';
 const menuItems = [
   { name: 'Dashboard', icon: HomeIcon, path: '/' },
   { name: 'Weather Perils', icon: CloudRainIcon, path: '/weather' },
-  { name: 'Projects Map', icon: MapPinIcon, path: '/projects' },
+  { name: 'Projects', icon: MapPinIcon, path: '/projects' },
   { name: 'Risk Management', icon: ShieldIcon, path: '/risk-management' },
   { name: 'Forecast', icon: CalendarIcon, path: '/forecast' },
   { name: 'Analytics', icon: BarChart3Icon, path: '/analytics' },

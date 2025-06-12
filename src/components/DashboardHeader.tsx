@@ -32,6 +32,10 @@ export const DashboardHeader: React.FC = () => {
   };
   
   const handleProfileClick = (path: string) => {
+    if (path === '/profile') {
+      toast.info("Profile page coming soon");
+      return;
+    }
     navigate(path);
   };
 
@@ -101,7 +105,7 @@ export const DashboardHeader: React.FC = () => {
               </DropdownMenuItem>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-primary cursor-pointer hover:bg-primary/10 transition-colors" onClick={() => navigate('/notifications')}>
+            <DropdownMenuItem className="text-primary cursor-pointer hover:bg-primary/10 transition-colors" onClick={() => toast.info("All notifications viewed")}>
               View all notifications
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -125,7 +129,7 @@ export const DashboardHeader: React.FC = () => {
             <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => handleProfileClick('/profile')}>
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => handleProfileClick('/notifications')}>
+            <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => toast.info("All notifications viewed")}>
               Notifications
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer hover:bg-secondary/50 transition-colors" onClick={() => handleProfileClick('/settings')}>

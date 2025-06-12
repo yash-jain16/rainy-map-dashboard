@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,8 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import PerilInsights from "./pages/PerilInsights";
+import Profile from "./pages/Profile";
+import Notifications from "./pages/Notifications";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +51,8 @@ const App = () => (
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/actuarial" element={<ActuarialWorkspace />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/peril-insights/:perilType" element={<PerilInsights />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

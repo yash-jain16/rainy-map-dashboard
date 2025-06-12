@@ -1,13 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   CloudRainIcon, 
-  ThermometerIcon, 
-  SnowflakeIcon, 
-  WindIcon, 
-  FlameIcon,
   MessageCircleIcon
 } from 'lucide-react';
 import { toast } from "sonner";
@@ -23,40 +20,6 @@ interface PerilOverviewProps {
   }[];
 }
 
-const getPerilIcon = (name: string) => {
-  switch (name.toLowerCase()) {
-    case 'rainfall':
-      return CloudRainIcon;
-    case 'temperature':
-      return ThermometerIcon;
-    case 'snowfall':
-      return SnowflakeIcon;
-    case 'wind':
-      return WindIcon;
-    case 'fire risk':
-      return FlameIcon;
-    default:
-      return CloudRainIcon;
-  }
-};
-
-const getPerilColor = (name: string) => {
-  switch (name.toLowerCase()) {
-    case 'rainfall':
-      return 'text-blue-600 bg-blue-100';
-    case 'temperature':
-      return 'text-orange-600 bg-orange-100';
-    case 'snowfall':
-      return 'text-cyan-600 bg-cyan-100';
-    case 'wind':
-      return 'text-gray-600 bg-gray-100';
-    case 'fire risk':
-      return 'text-red-600 bg-red-100';
-    default:
-      return 'text-blue-600 bg-blue-100';
-  }
-};
-
 export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
   const navigate = useNavigate();
 
@@ -65,24 +28,23 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
   };
 
   const handlePerilClick = (perilName: string) => {
-    if (perilName === 'Fire Risk') {
-      navigate('/peril-insights/fire-risk');
-    } else {
-      navigate(`/peril-insights/${perilName.toLowerCase()}`);
-    }
+    navigate(`/peril-insights/${perilName.toLowerCase()}`);
   };
+
+  // Filter to show only rainfall/precipitation data for version 1
+  const rainfallData = data.filter(peril => 
+    peril.name.toLowerCase().includes('rainfall') || 
+    peril.name.toLowerCase().includes('precipitation')
+  );
 
   return (
     <Card className="glass-card hover:shadow-lg transition-all duration-300">
       <CardHeader>
-        <CardTitle className="text-xl font-medium">Weather Peril Coverage</CardTitle>
+        <CardTitle className="text-xl font-medium">Precipitation Coverage</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          {data.map((peril) => {
-            const IconComponent = getPerilIcon(peril.name);
-            const colorClass = getPerilColor(peril.name);
-            
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {rainfallData.map((peril) => {
             return (
               <div 
                 key={peril.name} 
@@ -92,8 +54,8 @@ export const PerilOverview: React.FC<PerilOverviewProps> = ({ data }) => {
                 onClick={peril.purchased ? () => handlePerilClick(peril.name) : undefined}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <div className={`p-2 rounded-full transition-opacity ${colorClass} ${!peril.purchased ? 'opacity-60' : ''}`}>
-                    <IconComponent size={16} />
+                  <div className={`p-2 rounded-full transition-opacity text-blue-600 bg-blue-100 ${!peril.purchased ? 'opacity-60' : ''}`}>
+                    <CloudRainIcon size={16} />
                   </div>
                   <h3 className={`font-medium text-sm ${!peril.purchased ? 'text-muted-foreground' : ''}`}>
                     {peril.name}
